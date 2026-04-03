@@ -86,11 +86,24 @@ popupClose?.addEventListener('click', () => {
     localStorage.setItem('welcomePopupShown', 'true');
 });
 
-popupForm?.addEventListener('submit', (e) => {
+popupForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = e.target.querySelector('input[type="email"]').value;
-    console.log('Email captured:', email);
-    // Here you would normally send this to your backend
+    try {
+        await fetch('https://www.bogen.ai/api/book/speaker-inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: 'Website',
+                last_name: 'Visitor',
+                email: email,
+                phone: 'N/A',
+                message: '[Popup form] Free Business Assessment request'
+            })
+        });
+    } catch (err) {
+        console.error('Popup form error:', err);
+    }
     alert('Thank you! Check your email for your free business assessment.');
     welcomePopup.classList.remove('show');
     localStorage.setItem('welcomePopupShown', 'true');
@@ -108,21 +121,68 @@ welcomePopup?.addEventListener('click', (e) => {
 const contactForm = document.querySelector('.contact-form');
 const newsletterForm = document.querySelector('.newsletter-form');
 
-contactForm?.addEventListener('submit', (e) => {
+contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log('Contact form data:', data);
-    // Here you would normally send this to your backend
-    alert('Thank you for your interest! We will contact you within 24 hours to schedule your strategy call.');
-    e.target.reset();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('.form-status');
+    const originalText = btn.textContent;
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+        const res = await fetch('https://www.bogen.ai/api/book/speaker-inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: form.first_name.value,
+                last_name: form.last_name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                message: form.message?.value || ''
+            })
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        if (status) {
+            status.style.display = 'block';
+            status.style.color = '#4CAF50';
+            status.textContent = 'Thank you! We will contact you within 24 hours.';
+        }
+        form.reset();
+    } catch (err) {
+        console.error('Contact form error:', err);
+        if (status) {
+            status.style.display = 'block';
+            status.style.color = '#f44336';
+            status.textContent = 'Something went wrong. Please call 561-235-7575.';
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+    }
 });
 
-newsletterForm?.addEventListener('submit', (e) => {
+newsletterForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = e.target.querySelector('input[type="email"]').value;
-    console.log('Newsletter subscription:', email);
-    // Here you would normally send this to your backend
+    try {
+        await fetch('https://www.bogen.ai/api/book/speaker-inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: 'Newsletter',
+                last_name: 'Subscriber',
+                email: email,
+                phone: 'N/A',
+                message: '[Newsletter signup] from speaker site'
+            })
+        });
+    } catch (err) {
+        console.error('Newsletter form error:', err);
+    }
     alert('Thank you for subscribing! Check your email for exclusive insights.');
     e.target.reset();
 });

@@ -360,34 +360,29 @@
             <h2 class="section-title">Start Your Transformation Today</h2>
             <div class="contact-main">
                 <div class="contact-content">
-                    <form class="contact-form">
+                    <form class="contact-form" id="speakerContactForm">
                         <h3>Schedule Your Strategy Call</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="text" placeholder="Your Name" required>
+                                <input type="text" name="first_name" placeholder="First Name" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" placeholder="Your Email" required>
+                                <input type="text" name="last_name" placeholder="Last Name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="tel" placeholder="Phone Number">
+                                <input type="email" name="email" placeholder="Your Email" required>
                             </div>
                             <div class="form-group">
-                                <select required>
-                                    <option value="">Select Interest</option>
-                                    <option value="mastermind">Mastermind Groups</option>
-                                    <option value="coaching">Executive Coaching</option>
-                                    <option value="ai">AI Consulting</option>
-                                    <option value="realestate">Real Estate</option>
-                                </select>
+                                <input type="tel" name="phone" placeholder="Phone Number" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Tell us about your goals" rows="4"></textarea>
+                            <textarea name="message" placeholder="Tell us about your event or goals" rows="4"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-full">Schedule Your Free Strategy Call</button>
+                        <p class="form-status" style="display:none; margin-top: 12px; text-align: center;"></p>
                     </form>
 
                     <div class="contact-info-cards">
@@ -465,8 +460,8 @@
                 <div class="footer-section">
                     <h4>Stay Connected</h4>
                     <p>Join thousands receiving Edmund's weekly insights on AI integration, business scaling, and mastermind strategies.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email">
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" name="email" placeholder="Your email" required>
                         <button type="submit" class="btn btn-primary">Subscribe</button>
                     </form>
                 </div>
@@ -487,8 +482,8 @@
             <button class="popup-close" aria-label="Close popup">&times;</button>
             <h2>Unlock Your Business Potential</h2>
             <p>Get your FREE Business Assessment and discover how AI can transform your success</p>
-            <form class="popup-form">
-                <input type="email" placeholder="Enter your email" required>
+            <form class="popup-form" id="popupForm">
+                <input type="email" name="email" placeholder="Enter your email" required>
                 <button type="submit" class="btn btn-primary">Get Free Assessment</button>
             </form>
             <p class="popup-note">Join 100+ leaders already transforming their businesses</p>
